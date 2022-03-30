@@ -17,8 +17,8 @@ private const val TAG = "Rotation"
 
 class MotionService(activity: Activity) : SensorEventListener {
 
-    interface Listener {
-        fun onOrientationChanged(pitch: Int, roll: Int)
+    interface MotionListener {
+        fun onRotationChange(pitch: Int, roll: Int)
     }
 
     var currentRoll: Int = 0
@@ -32,10 +32,10 @@ class MotionService(activity: Activity) : SensorEventListener {
     private var mAccel: Float = 0.toFloat() // acceleration apart from gravity
     private var mAccelCurrent: Float = 0.toFloat() // current acceleration including gravity
     private var mAccelLast: Float = 0.toFloat() // last acceleration including gravity
-    private var mListener: Listener? = null
+    private var mListener: MotionListener? = null
 
 
-    fun startListening(listener: Listener) {
+    fun startListening(listener: MotionListener) {
         if (mListener === listener) {
             return
         }
@@ -120,6 +120,6 @@ class MotionService(activity: Activity) : SensorEventListener {
         currentPitch = pitch.toInt()
         currentRoll = roll.toInt()
 
-        mListener?.onOrientationChanged(pitch.toInt(), roll.toInt())
+        mListener?.onRotationChange(pitch.toInt(), roll.toInt())
     }
 }
