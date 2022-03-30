@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), Player.Listener, MotionService.Listene
     private lateinit var playerView: StyledPlayerView
     var currentPitch = 0
     var currentRoll = 0
-    var minDistance = 3 // 5 meters
+    var minDistance = 10 // 5 meters
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), Player.Listener, MotionService.Listene
         locationRequest = LocationRequest.create().apply {
             interval = 5000
             fastestInterval = 5000
-            smallestDisplacement = 3f
+            smallestDisplacement = 10f
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
         locationCallback = object : LocationCallback() {
