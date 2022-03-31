@@ -4,7 +4,6 @@ package com.aleksa.overplayinterviewtest.motionevents
  * Created by Aleksa Djordjevic on March 31st 2022
  * Copyright (c) 2022 . All rights reserved.
  */
-
 import android.app.Activity
 import android.hardware.Sensor
 import android.hardware.SensorEvent

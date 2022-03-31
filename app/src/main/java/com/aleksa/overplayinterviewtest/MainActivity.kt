@@ -7,6 +7,7 @@ package com.aleksa.overplayinterviewtest
 
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.aleksa.overplayinterviewtest.locationevents.LocationService
@@ -30,8 +31,8 @@ class MainActivity : AppCompatActivity(), Player.Listener, MotionService.MotionL
 
     private lateinit var mMotionService: MotionService
     private lateinit var mLocationService: LocationService
-    private lateinit var mPlayer: ExoPlayer
     private lateinit var playerView: StyledPlayerView
+    lateinit var mPlayer: ExoPlayer
     private val locationA = Location("point A")
     private var currentPitch = 0
     private var currentRoll = 0
@@ -123,11 +124,11 @@ class MainActivity : AppCompatActivity(), Player.Listener, MotionService.MotionL
 
     override fun onStart() {
         super.onStart()
-        mMotionService = MotionService(this)
-        mLocationService = LocationService(this, this)
         if (Util.SDK_INT >= 24) {
             initPlayer()
         }
+        mMotionService = MotionService(this)
+        mLocationService = LocationService(this, this)
     }
 
     override fun onResume() {
