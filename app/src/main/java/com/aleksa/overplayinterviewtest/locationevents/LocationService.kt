@@ -1,5 +1,10 @@
 package com.aleksa.overplayinterviewtest.locationevents
 
+/**
+ * Created by Aleksa Djordjevic on March 31st 2022
+ * Copyright (c) 2022 . All rights reserved.
+ */
+
 import android.app.Activity
 import android.os.Looper
 import com.aleksa.overplayinterviewtest.utils.PermissionsUtils
@@ -15,11 +20,11 @@ class LocationService(activity: Activity, listener: LocationListener) {
         LocationServices.getFusedLocationProviderClient(activity)
     private var locationRequest: LocationRequest
     private var locationCallback: LocationCallback
-    var minDistanceRefresh = 10f // 10 meters
+    private var minDistanceRefresh = 10f // 10 meters
     var currentLong: Double = 0.0
     var currentLat: Double = 0.0
     private var mListener: LocationListener? = null
-    var permissionUtils = PermissionsUtils(activity)
+    private var permissionUtils = PermissionsUtils(activity)
 
     init {
         mListener = listener

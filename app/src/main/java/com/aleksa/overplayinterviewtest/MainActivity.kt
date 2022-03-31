@@ -1,5 +1,9 @@
 package com.aleksa.overplayinterviewtest
 
+/**
+ * Created by Aleksa Djordjevic on March 31st 2022
+ * Copyright (c) 2022 . All rights reserved.
+ */
 
 import android.location.Location
 import android.os.Bundle
@@ -26,11 +30,12 @@ class MainActivity : AppCompatActivity(), Player.Listener, MotionService.MotionL
 
     private lateinit var mMotionService: MotionService
     private lateinit var mLocationService: LocationService
+    private lateinit var mPlayer: ExoPlayer
     private lateinit var playerView: StyledPlayerView
     private val locationA = Location("point A")
-    var currentPitch = 0
-    var currentRoll = 0
-    private var minDistance = 10 // 15 meters
+    private var currentPitch = 0
+    private var currentRoll = 0
+    private var minDistance = 10 // 10 meters
 
     private val videoURL =
         "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
@@ -161,9 +166,4 @@ class MainActivity : AppCompatActivity(), Player.Listener, MotionService.MotionL
         return ProgressiveMediaSource.Factory(dataSourceFactory)
             .createMediaSource(MediaItem.fromUri(videoURL))
     }
-
-    companion object {
-        lateinit var mPlayer: ExoPlayer
-    }
-
 }

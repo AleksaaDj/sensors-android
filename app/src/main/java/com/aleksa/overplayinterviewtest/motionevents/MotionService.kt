@@ -1,7 +1,9 @@
 package com.aleksa.overplayinterviewtest.motionevents
-/*
-Copyright Aleksa Djordjevic
-*/
+
+/**
+ * Created by Aleksa Djordjevic on March 31st 2022
+ * Copyright (c) 2022 . All rights reserved.
+ */
 
 import android.app.Activity
 import android.hardware.Sensor
@@ -26,7 +28,8 @@ class MotionService(activity: Activity) : SensorEventListener {
     private val mWindowManager: WindowManager = activity.window.windowManager
     private val mSensorManager: SensorManager =
         activity.getSystemService(Activity.SENSOR_SERVICE) as SensorManager
-    private val mRotationSensor: Sensor? = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+    private val mRotationSensor: Sensor? =
+        mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
     private var mLastAccuracy: Int = SensorManager.SENSOR_STATUS_UNRELIABLE
     private val mAccelerometer: Sensor? = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
     private var mAccel: Float = 0.toFloat() // acceleration apart from gravity
@@ -78,7 +81,7 @@ class MotionService(activity: Activity) : SensorEventListener {
             mAccel = mAccel * 0.9f + delta
 
             if (mAccel > 15) {
-               mListener?.onShakeChange()
+                mListener?.onShakeChange()
             }
         }
     }

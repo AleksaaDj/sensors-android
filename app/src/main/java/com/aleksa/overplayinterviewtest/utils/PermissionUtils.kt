@@ -1,12 +1,15 @@
 package com.aleksa.overplayinterviewtest.utils
 
+/**
+ * Created by Aleksa Djordjevic on March 31st 2022
+ * Copyright (c) 2022 . All rights reserved.
+ */
+
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-
 
 class PermissionsUtils(private val context: Activity) {
 
