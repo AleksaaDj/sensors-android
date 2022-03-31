@@ -11,7 +11,6 @@ import android.hardware.SensorManager
 import android.util.Log
 import android.view.Surface
 import android.view.WindowManager
-import com.aleksa.overplayinterviewtest.MainActivity
 
 private const val TAG = "Rotation"
 
@@ -19,6 +18,7 @@ class MotionService(activity: Activity) : SensorEventListener {
 
     interface MotionListener {
         fun onRotationChange(pitch: Int, roll: Int)
+        fun onShakeChange()
     }
 
     var currentRoll: Int = 0
@@ -78,16 +78,8 @@ class MotionService(activity: Activity) : SensorEventListener {
             mAccel = mAccel * 0.9f + delta
 
             if (mAccel > 15) {
-               updatePlayer()
+               mListener?.onShakeChange()
             }
-        }
-    }
-
-    private fun updatePlayer() {
-        if (MainActivity.mPlayer.isPlaying) {
-            MainActivity.mPlayer.pause()
-        } else {
-            MainActivity.mPlayer.play()
         }
     }
 

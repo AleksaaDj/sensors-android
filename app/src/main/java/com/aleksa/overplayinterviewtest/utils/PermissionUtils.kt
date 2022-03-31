@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 
 class PermissionsUtils(private val context: Activity) {
 
-    private fun checkPermission(): Boolean {
+    fun checkPermission(): Boolean {
         val result = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -22,7 +22,7 @@ class PermissionsUtils(private val context: Activity) {
         return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun requestPermission() {
+    fun requestPermission() {
         ActivityCompat.requestPermissions(
             context,
             arrayOf(

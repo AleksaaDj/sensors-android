@@ -1,13 +1,11 @@
 package com.aleksa.overplayinterviewtest.locationevents
 
-import android.Manifest
 import android.app.Activity
-import android.content.pm.PackageManager
 import android.os.Looper
-import androidx.core.app.ActivityCompat
+import com.aleksa.overplayinterviewtest.utils.PermissionsUtils
 import com.google.android.gms.location.*
 
-class LocationService(var activity: Activity, listener: LocationListener) {
+class LocationService(activity: Activity, listener: LocationListener) {
 
     interface LocationListener {
         fun onLocationUpdate(long: Double, lat: Double)
@@ -17,27 +15,24 @@ class LocationService(var activity: Activity, listener: LocationListener) {
         LocationServices.getFusedLocationProviderClient(activity)
     private var locationRequest: LocationRequest
     private var locationCallback: LocationCallback
-    var minDistance = 5f // 10 meters
+    var minDistanceRefresh = 10f // 10 meters
     var currentLong: Double = 0.0
     var currentLat: Double = 0.0
     private var mListener: LocationListener? = null
-
+    var permissionUtils = PermissionsUtils(activity)
 
     init {
         mListener = listener
         locationRequest = LocationRequest.create().apply {
-            interval = 10000
-            fastestInterval = 10000
-            smallestDisplacement = minDistance
+            interval = 8000
+            fastestInterval = 8000
+            smallestDisplacement = minDistanceRefresh
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
                     var newLocationLong = 0.0
                     var newLocationLat = 0.0
-                    //Calculating current location.
-                    currentLong = locationResult.lastLocation.longitude
-                    currentLat = locationResult.lastLocation.latitude
-                    for (location in locationResult.locations){
+                    for (location in locationResult.locations) {
                         newLocationLong = location.longitude
                         newLocationLat = location.latitude
                     }
@@ -48,21 +43,20 @@ class LocationService(var activity: Activity, listener: LocationListener) {
     }
 
     fun startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (permissionUtils.checkPermission()) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener {
+                    currentLat = it.latitude
+                    currentLong = it.longitude
+                }
+            fusedLocationClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
+        } else {
             return
         }
-        fusedLocationClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            Looper.getMainLooper()
-        )
     }
 
     // remove location callback
