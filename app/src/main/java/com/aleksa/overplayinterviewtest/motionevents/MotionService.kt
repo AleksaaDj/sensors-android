@@ -1,8 +1,9 @@
 package com.aleksa.overplayinterviewtest.motionevents
-/*
-Copyright Aleksa Djordjevic
-*/
 
+/**
+ * Created by Aleksa Djordjevic on March 31st 2022
+ * Copyright (c) 2022 . All rights reserved.
+ */
 import android.app.Activity
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -11,14 +12,14 @@ import android.hardware.SensorManager
 import android.util.Log
 import android.view.Surface
 import android.view.WindowManager
-import com.aleksa.overplayinterviewtest.MainActivity
 
 private const val TAG = "Rotation"
 
 class MotionService(activity: Activity) : SensorEventListener {
 
-    interface Listener {
-        fun onOrientationChanged(pitch: Int, roll: Int)
+    interface MotionListener {
+        fun onRotationChange(pitch: Int, roll: Int)
+        fun onShakeChange()
     }
 
     var currentRoll: Int = 0
@@ -26,16 +27,17 @@ class MotionService(activity: Activity) : SensorEventListener {
     private val mWindowManager: WindowManager = activity.window.windowManager
     private val mSensorManager: SensorManager =
         activity.getSystemService(Activity.SENSOR_SERVICE) as SensorManager
-    private val mRotationSensor: Sensor? = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+    private val mRotationSensor: Sensor? =
+        mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
     private var mLastAccuracy: Int = SensorManager.SENSOR_STATUS_UNRELIABLE
     private val mAccelerometer: Sensor? = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
     private var mAccel: Float = 0.toFloat() // acceleration apart from gravity
     private var mAccelCurrent: Float = 0.toFloat() // current acceleration including gravity
     private var mAccelLast: Float = 0.toFloat() // last acceleration including gravity
-    private var mListener: Listener? = null
+    private var mListener: MotionListener? = null
 
 
-    fun startListening(listener: Listener) {
+    fun startListening(listener: MotionListener) {
         if (mListener === listener) {
             return
         }
@@ -78,16 +80,8 @@ class MotionService(activity: Activity) : SensorEventListener {
             mAccel = mAccel * 0.9f + delta
 
             if (mAccel > 15) {
-               updatePlayer()
+                mListener?.onShakeChange()
             }
-        }
-    }
-
-    private fun updatePlayer() {
-        if (MainActivity.mPlayer.isPlaying) {
-            MainActivity.mPlayer.pause()
-        } else {
-            MainActivity.mPlayer.play()
         }
     }
 
@@ -120,6 +114,6 @@ class MotionService(activity: Activity) : SensorEventListener {
         currentPitch = pitch.toInt()
         currentRoll = roll.toInt()
 
-        mListener?.onOrientationChanged(pitch.toInt(), roll.toInt())
+        mListener?.onRotationChange(pitch.toInt(), roll.toInt())
     }
 }
