@@ -1,4 +1,4 @@
-package com.aleksa.overplayinterviewtest
+package com.aleksa.overplayinterviewtest.ui
 
 /**
  * Created by Aleksa Djordjevic on March 31st 2022
@@ -9,6 +9,7 @@ import android.location.Location
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.aleksa.overplayinterviewtest.R
 import com.aleksa.overplayinterviewtest.locationevents.LocationService
 import com.aleksa.overplayinterviewtest.motionevents.MotionService
 import com.aleksa.overplayinterviewtest.utils.PermissionsUtils
