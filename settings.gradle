@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "OverPlayInterviewTest"
+rootProject.name = "sensors-android"
 include ':app'

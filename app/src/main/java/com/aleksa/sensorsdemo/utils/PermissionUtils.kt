@@ -1,9 +1,4 @@
-package com.aleksa.overplayinterviewtest.utils
-
-/**
- * Created by Aleksa Djordjevic on March 31st 2022
- * Copyright (c) 2022 . All rights reserved.
- */
+package com.aleksa.sensorsdemo.utils
 
 import android.Manifest
 import android.app.Activity
@@ -14,15 +9,16 @@ import androidx.core.content.ContextCompat
 class PermissionsUtils(private val context: Activity) {
 
     fun checkPermission(): Boolean {
-        val result = ContextCompat.checkSelfPermission(
+        val fineLocation = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_FINE_LOCATION
         )
-        val result1 = ContextCompat.checkSelfPermission(
+        val coarseLocation = ContextCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
-        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED
+        return fineLocation == PackageManager.PERMISSION_GRANTED &&
+            coarseLocation == PackageManager.PERMISSION_GRANTED
     }
 
     fun requestPermission() {
